@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 Route::get('/feeds', 'FeedsController@index');
@@ -22,3 +22,7 @@ Route::get('/feeds/{id}', 'FeedsController@view');
 Route::get('/feeds/{id}/edit', 'FeedsController@edit');
 Route::patch('/feeds/{id}', 'FeedsController@update');
 Route::delete('/feeds/{id}', 'FeedsController@destory');
+Auth::routes();
+
+// Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'FeedsController@index');
