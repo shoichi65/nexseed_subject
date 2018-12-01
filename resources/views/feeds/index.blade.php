@@ -9,7 +9,9 @@
   <div class="col-lg-12">
     <div class="page-header">
       <h1 id="tables">Feeds List</h1>
-      <a class="btn btn-primary" href="/feeds/create">Post</a>
+      @auth  
+        <a class="btn btn-primary" href="/feeds/create">Post</a>
+      @endauth
     </div>
 
     <div class="row">

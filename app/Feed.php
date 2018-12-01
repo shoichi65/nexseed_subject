@@ -17,10 +17,14 @@ class Feed extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id', 'feed',
+        'user_id', 'feed', 'likes_count', 'comments_count'
     ];
     
     public function user() {
         return $this->belongsTo('App\User');
+    }
+
+    public function comments() {
+        return $this->hasMany('App\Comment');
     }
 }

@@ -26,3 +26,9 @@ Auth::routes();
 
 // Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/home', 'FeedsController@index');
+
+Route::post('/likes', 'LikesController@like');
+
+Route::post('/comments', 'CommentsController@store');
+// Route::get('/comments/{comment_id}/{feed_id}', 'CommentsController@destory');
+Route::delete('/comments/{comment_id}', 'CommentsController@destory');

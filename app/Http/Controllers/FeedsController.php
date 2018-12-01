@@ -5,9 +5,17 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Validator;
 use App\Feed;
+use App\Like;
+use App\Comment;
 
 class FeedsController extends Controller
 {
+    // ログインしていないときのリダイレクト
+    public function __construct()
+    {
+        $this->middleware('auth')->except(['index', 'view']);
+    }
+
     // index
     public function index() {
         $feeds = Feed::latest()->get();
@@ -18,7 +26,18 @@ class FeedsController extends Controller
     // view
     public function view($id) {
         $feed = Feed::findOrFail($id);
-        return view('feeds.view', compact('feed'));
+        $like_count = Like::where([
+            'user_id' => \Auth::user()->id,
+            'feed_id' => $id,
+        ])
+        ->count();
+        $comments = Comment::where([
+            'feed_id' => $id,
+        ])
+        ->latest()
+        ->get();
+        // dd($comments);
+        return view('feeds.view', compact('feed','like_count', 'comments'));
     }
 
     // create
@@ -40,7 +59,7 @@ class FeedsController extends Controller
         }
 
         Feed::create([
-            'user_id' => 4,
+            'user_id' => \Auth::user()->id,
             'feed' => $request->feed,
         ]);
 

@@ -17,7 +17,14 @@ class Comment extends Model
      * @var array
      */
     protected $fillable = [
-        'comment',
+        'user_id', 'feed_id', 'comment',
     ];
 
+    public function user() {
+        return $this->belongsTo('App\User');
+    }
+
+    public function feed() {
+        return $this->belongsTo('App\Feed');
+    }
 }

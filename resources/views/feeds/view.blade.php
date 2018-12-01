@@ -22,17 +22,88 @@
 					</div>
 					<br>
 					<div class="mt-50">
-						<a class="btn btn-success round-2" href="/feeds/{{ $feed['id'] }}/edit">Edit</a>
-						<form action="/feeds/{{ $feed['id'] }}" method="POST" style="display: inline">
-							{{ csrf_field() }}
-							{{-- これを書くことで、メソッドを偽装する --}}
-							<input type="hidden" name="_method" value="DELETE">
-							<button class="btn btn-danger" type="submit">Delete</button>
-						</form>
+						@if (Auth::check() && Auth::user()->id == $feed['user_id'])
+							<a class="btn btn-success round-2" href="/feeds/{{ $feed['id'] }}/edit">Edit</a>
+							<form action="/feeds/{{ $feed['id'] }}" method="POST" style="display: inline">
+								{{ csrf_field() }}
+								{{-- これを書くことで、メソッドを偽装する --}}
+								<input type="hidden" name="_method" value="DELETE">
+								<button class="btn btn-danger" type="submit">Delete</button>
+							</form>
+						@endif
+						@auth
+							<form action="/likes" method="POST" style="display: inline">
+								{{ csrf_field() }}
+								<input type="hidden" name="feed_id" value="{{ $feed['id'] }}">
+								@if ($like_count == 0)
+									<input type="hidden" name="btn" value="like">
+									<button class="btn btn-primary"><i class="fa fa-star solid"></i>Good!(<span id="Likes_Count">{{$feed['likes_count']}}</span>)</button>
+								@else
+									<input type="hidden" name="btn" value="unlike">
+									<button class="btn btn-default"><i class="fa fa-star star"></i>Cancel...(<span id="Likes_Count">{{$feed['likes_count']}}</span>)</button>
+								@endif
+							</form>
+						@endif
 						<a class="btn btn-default" href="/feeds">Back</a>
 					</div>
 				</div>
 			</div>
+			<hr>
+			<div class="col-lg-4">
+				<div class="bs-component">
+					@foreach($comments as $comment)
+						<blockquote>
+							{{-- <h2>Feeds List</h2> --}}
+							<p class="text-muted">
+								<td>{{ $comment['comment'] }}</td>
+							</p>
+							<small>
+							{{ $comment['created_at'] }}
+							<cite class="mt-5">{{ $comment->user['name'] }}</cite>
+							</small>
+							@if (Auth::check() && Auth::user()->id == $comment['user_id'])
+								<form action="/comments/{{ $comment['id'] }}" method="POST" style="display: inline">
+									{{ csrf_field() }}
+									<input type="hidden" name="feed_id" value="{{ $feed['id'] }}">
+									<input type="hidden" name="_method" value="DELETE">
+									<button class="btn btn-sm btn-danger" type="submit">Delete</button>
+								</form>
+								{{-- <a href="/comments/{{ $comment['id'] }}/{{ $comment['feed_id'] }}">Delete</a> --}}
+							@endauth
+						</blockquote>
+					@endforeach
+				</div>
+			</div>
+
+			@auth
+				<div class="row">
+					<div class="col-lg-6">
+						<div class="well bs-component">
+						<form class="form-horizontal" action="/comments" method="POST">
+							{{ csrf_field() }}
+							<input type="hidden" name="feed_id" value="{{ $feed['id'] }}">
+							<fieldset>
+							<div class="form-group">
+								<label for="textArea" class="col-lg-2 control-label">Comment</label>
+								<div class="col-lg-10">
+								<textarea class="form-control" rows="3" id="textArea" name="comment"></textarea>
+								<span class="help-block"></span>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-lg-10 col-lg-offset-2">
+								<button type="submit" class="btn btn-primary">Comment</button>
+								{{-- <button type="reset" class="btn btn-default">キャンセル</button> --}}
+								{{-- <a href="/feeds" class="btn btn-default">Cancel</a> --}}
+								</div>
+							</div>
+							</fieldset>
+						</form>
+						</div>
+					</div>
+				</div>
+			@endauth
+
 		</div>
 	</div>
 </div>

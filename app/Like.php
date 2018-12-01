@@ -9,6 +9,10 @@ class Like extends Model
 {
     use SoftDeletes;
 
+    protected $fillable = [
+        'user_id', 'feed_id',
+    ];
+
     protected $dates = ['deleted_at'];
 
 }

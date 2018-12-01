@@ -33,6 +33,10 @@ class User extends Authenticatable
     ];
 
     public function feeds() {
-        return $this->hasMany('App\Feeds');
+        return $this->hasMany('App\Feed');
+    }
+
+    public function comments() {
+        return $this->hasMany('App\Comment');
     }
 }
