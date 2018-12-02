@@ -22,6 +22,7 @@
 
     <div class="container">
         <div class="page-header" id="banner">
+            <div style="margin-top:100px"></div>
             {{-- 処理完了メッセージの表示 --}}
             @if (Session::has('flash_message'))
                 <div class="alert alert-success">{{ Session::get('flash_message') }}
