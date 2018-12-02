@@ -1,11 +1,7 @@
 @extends('layout')
 
 @section('content')
-
-  <!-- Tables
-  ================================================== -->
-  <div class="bs-docs-section">
-
+<div class="bs-docs-section">
     <div class="row">
         <div class="col-lg-12">
         <div class="page-header">
@@ -24,7 +20,6 @@
                 </tr>
             </thead>
             <tbody>
-                {{-- <form action="" method="POST" id="feed-delete-form"> --}}
                 @foreach($feeds as $feed)
                     <tr class='hogehoge'>
                         <td>{{ $feed->feed }}</td>
@@ -50,7 +45,7 @@
                 @endforeach
             </tbody>
             </table>
-        </div><!-- /example -->
+        </div>
         <a class="btn btn-default" href="/admin">Back</a>
         </div>
     </div>
