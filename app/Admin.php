@@ -4,16 +4,12 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-class User extends Authenticatable
+class Admin extends Authenticatable
 {
     use Notifiable;
+    protected $guard = 'admin';
 
-    use SoftDeletes;
-
-    protected $dates = ['deleted_at'];
-    
     /**
      * The attributes that are mass assignable.
      *
@@ -32,11 +28,4 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function feeds() {
-        return $this->hasMany('App\Feed');
-    }
-
-    public function comments() {
-        return $this->hasMany('App\Comment');
-    }
 }
