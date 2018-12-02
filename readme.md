@@ -51,4 +51,7 @@ $ php artisan tinker
   'password' => bcrypt("hogehoge")
 ]);
 ```  
-
+ブラウザ(Chrome推奨)で以下のURLを開く
+```
+http://localhost:8000/admin/login
+```
