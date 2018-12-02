@@ -19,7 +19,7 @@ class FeedsController extends Controller
     // index
     public function index() {
         // feedを最新順に取得
-        $feeds = Feed::latest()->get();
+        $feeds = Feed::latest()->paginate(10);
 
         return view('feeds.index', compact('feeds'));
     }
@@ -39,7 +39,7 @@ class FeedsController extends Controller
             'feed_id' => $id,
         ])
         ->latest()
-        ->get();
+        ->paginate(10);
         
         return view('feeds.view', compact('feed','like_count', 'comments'));
     }

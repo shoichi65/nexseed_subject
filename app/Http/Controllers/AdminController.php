@@ -26,7 +26,7 @@ class AdminController extends Controller
     public function index()
     {
         // user全件取得
-        $users = User::all();
+        $users = User::paginate(10);
         // return view('admin');
         return view('admin.index', compact('users'));
     }
@@ -41,7 +41,7 @@ class AdminController extends Controller
         // feed数を取得
         $feeds_count = Feed::where('user_id', $id)->count();
         // feedを取得(deleteしたものも含む)
-        $feeds = Feed::where('user_id', $id)->withTrashed()->get();
+        $feeds = Feed::where('user_id', $id)->withTrashed()->paginate(10);
 
         return view('admin.view', compact('feeds_count', 'feeds'));
     }

@@ -26,6 +26,9 @@
                 <hr>
               @endforeach
           </div>
+
+        <!-- page control -->
+        {!! $feeds->render() !!}
       </div>
     </div>
   </div>

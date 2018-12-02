@@ -21,24 +21,26 @@
     @include('navbar')
 
     <div class="container">
-        {{-- 処理完了メッセージの表示 --}}
-        @if (Session::has('flash_message'))
-            <div class="alert alert-success">{{ Session::get('flash_message') }}
+        <div class="page-header" id="banner">
+            {{-- 処理完了メッセージの表示 --}}
+            @if (Session::has('flash_message'))
+                <div class="alert alert-success">{{ Session::get('flash_message') }}
+                </div>
+            @endif
+
+            {{-- エラーメッセージの表示 --}}
+            @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul style="list-style: none;">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
             </div>
-        @endif
 
-        {{-- エラーメッセージの表示 --}}
-        @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul style="list-style: none;">
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
+            @endif
+            @yield('content')
         </div>
-
-        @endif
-        @yield('content')
     </div>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     @if (app('env') == 'local')
