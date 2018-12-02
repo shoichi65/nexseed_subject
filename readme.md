@@ -32,3 +32,23 @@ Laravel development server started on http://localhost:8000/
 ```
 http://localhost:8000/
 ```
+
+## table作成
+カレントディレクトリはnexseed_subject
+```
+$ php artisan migrate
+```  
+## admin作成
+カレントディレクトリはnexseed_subject
+```
+$ php artisan tinker
+```  
+以下のコマンドを貼り付ける
+```
+ App\Admin::create([
+  'name' => 'admin',
+  'email' => 'admin@gmail.com',
+  'password' => bcrypt("hogehoge")
+]);
+```  
+
