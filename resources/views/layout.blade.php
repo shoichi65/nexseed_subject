@@ -5,13 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Page Title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
-    <script src="main.js"></script>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     @if (app('env') == 'local')
+        <link rel="stylesheet" type="text/css" media="screen" href="{{ asset('/css/main.css') }}" />
         <link rel="stylesheet" type="text/css" href="{{ asset('/css/bootstrap.css') }}" />
     @endif
     @if(app('env')=='production')
+        <link rel="stylesheet" type="text/css" media="screen" href="{{ secure_asset('/css/main.css') }}" />
         <link rel="stylesheet" type="text/css" href="{{ secure_asset('/css/bootstrap.css') }}">
     @endif
 
@@ -42,9 +43,11 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     @if (app('env') == 'local')
         <script src="{{ asset('/js/bootstrap.js') }}"></script>
+        <script src="{{ asset('/js/main.js') }}"></script>
     @endif
     @if(app('env')=='production')
         <script src="{{ secure_asset('/js/bootstrap.js') }}"></script>
+        <script src="{{ secure_asset('/js/main.js') }}"></script>
     @endif
 </body>
 </html>

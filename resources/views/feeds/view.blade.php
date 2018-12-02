@@ -32,16 +32,18 @@
 							</form>
 						@endif
 						@auth
-							<form action="/likes" method="POST" style="display: inline">
+							<form action="/likes" method="POST" style="display: inline" id="like_form">
 								{{ csrf_field() }}
 								<input type="hidden" name="feed_id" value="{{ $feed['id'] }}">
-								@if ($like_count == 0)
-									<input type="hidden" name="btn" value="like">
-									<button class="btn btn-primary"><i class="fa fa-star solid"></i>Good!(<span id="Likes_Count">{{$feed['likes_count']}}</span>)</button>
-								@else
-									<input type="hidden" name="btn" value="unlike">
-									<button class="btn btn-default"><i class="fa fa-star star"></i>Cancel...(<span id="Likes_Count">{{$feed['likes_count']}}</span>)</button>
-								@endif
+								<span id="like_button">
+									@if ($like_count == 0)
+										<input type="hidden" name="btn" value="like">
+										<button class="btn btn-primary"><i class="fa fa-star solid"></i>Good!(<span id="Likes_Count">{{$feed['likes_count']}}</span>)</button>
+									@else
+										<input type="hidden" name="btn" value="unlike">
+										<button class="btn btn-default"><i class="fa fa-star star"></i>Cancel...(<span id="Likes_Count">{{$feed['likes_count']}}</span>)</button>
+									@endif
+								</span>
 							</form>
 						@endif
 						<a class="btn btn-default" href="/feeds">Back</a>
@@ -49,37 +51,12 @@
 				</div>
 			</div>
 			<hr>
-			<div class="col-lg-4">
-				<div class="bs-component">
-					@foreach($comments as $comment)
-						<blockquote>
-							{{-- <h2>Feeds List</h2> --}}
-							<p class="text-muted">
-								<td>{{ $comment['comment'] }}</td>
-							</p>
-							<small>
-							{{ $comment['created_at'] }}
-							<cite class="mt-5">{{ $comment->user['name'] }}</cite>
-							</small>
-							@if (Auth::check() && Auth::user()->id == $comment['user_id'])
-								<form action="/comments/{{ $comment['id'] }}" method="POST" style="display: inline">
-									{{ csrf_field() }}
-									<input type="hidden" name="feed_id" value="{{ $feed['id'] }}">
-									<input type="hidden" name="_method" value="DELETE">
-									<button class="btn btn-sm btn-danger" type="submit">Delete</button>
-								</form>
-								{{-- <a href="/comments/{{ $comment['id'] }}/{{ $comment['feed_id'] }}">Delete</a> --}}
-							@endauth
-						</blockquote>
-					@endforeach
-				</div>
-			</div>
 
 			@auth
 				<div class="row">
 					<div class="col-lg-6">
 						<div class="well bs-component">
-						<form class="form-horizontal" action="/comments" method="POST">
+						<form class="form-horizontal" action="/comments" method="POST" id="comment_form">
 							{{ csrf_field() }}
 							<input type="hidden" name="feed_id" value="{{ $feed['id'] }}">
 							<fieldset>
@@ -102,7 +79,31 @@
 						</div>
 					</div>
 				</div>
+				<hr>
 			@endauth
+
+			<div class="col-lg-4">
+				<div class="bs-component" id="comment_list">
+					@foreach($comments as $comment)
+						<blockquote id="comment-{{ $comment['id'] }}" class="delete-link">
+							{{-- <h2>Feeds List</h2> --}}
+							<p class="text-muted">
+								<td>{{ $comment['comment'] }}</td>
+							</p>
+							<small>
+							{{ $comment['created_at'] }}
+							<cite class="mt-5">{{ $comment->user['name'] }}</cite>
+							</small>
+							@if (Auth::check() && Auth::user()->id == $comment['user_id'])
+								<a href="/comments/{{ $comment['id'] }}" 
+									data-feed_id="{{ $feed['id'] }}" 
+									data-comment_id="{{ $comment['id'] }}"
+								>Delete</a>
+							@endauth
+						</blockquote>
+					@endforeach
+				</div>
+			</div>
 
 		</div>
 	</div>
