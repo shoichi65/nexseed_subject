@@ -35,6 +35,8 @@
                 @endforeach
             </tbody>
             </table>
+            <!-- page control -->
+            {!! $users->render() !!}
         </div><!-- /example -->
         </div>
     </div>

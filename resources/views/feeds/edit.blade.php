@@ -5,7 +5,7 @@
   <div class="row">
     <div class="col-lg-12">
       <div class="page-header">
-        <h1 id="forms">Post feed</h1>
+        <h1 id="forms">Edit feed</h1>
       </div>
     </div>
   </div>
@@ -17,7 +17,7 @@
           {{ csrf_field() }}
           <fieldset>
             <div class="form-group">
-              <label for="textArea" class="col-lg-2 control-label">Post feed</label>
+              <label for="textArea" class="col-lg-2 control-label">Edit feed</label>
               <div class="col-lg-10">
                 {{-- これを書くことで、メソッドを偽装する --}}
                 <input type="hidden" name="_method" value="PATCH">

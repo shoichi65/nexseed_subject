@@ -12,7 +12,7 @@ $(function(){
             type: $form.attr('method'),
             data: $form.serialize(),
             success: function(result, textStatus, xhr){
-                console.log(result);
+                // console.log(result);
                 $('#like_button input').remove();
                 $('#like_button button').remove();
                 $('#like_button').append(result);
@@ -47,7 +47,7 @@ $(function(){
     });
 
     // コメント削除非同期処理
-    $('blockquote[id^="comment-"]').on('click', ".comment-delete", function(event) {
+    $('#comment_list').on('click', ".comment-delete", function(event) {
         // HTMLでの送信をキャンセル
         event.preventDefault();
         // 操作対象のフォーム要素を取得
@@ -64,19 +64,19 @@ $(function(){
         // methodを偽装
         data['_method'] = 'DELETE';
 
-        console.log($a);
-        console.log($a.data());
+        // console.log($a);
+        // console.log($a.data());
         $.ajax({
             url: $a.attr('href'),
             type: 'POST',
             data: data,
         })
         .done((result) => {
-            console.log(result);
+            // console.log(result);
             $(target_selector).remove();
         })
         .fail((result) => {
-            console.log(result);
+            // console.log(result);
         });
     });
     
@@ -106,12 +106,12 @@ $(function(){
             data: data,
         })
         .done((result) => {
-            console.log(result);
+            // console.log(result);
             $(target_selector + ' .feed-delete').remove();
             $(target_selector).append(result);
         })
         .fail((result) => {
-            console.log(result);
+            // console.log(result);
         });
     });
 });

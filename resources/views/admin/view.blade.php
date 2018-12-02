@@ -45,6 +45,8 @@
                 @endforeach
             </tbody>
             </table>
+            <!-- page control -->
+            {!! $feeds->render() !!}
         </div>
         <a class="btn btn-default" href="/admin">Back</a>
         </div>

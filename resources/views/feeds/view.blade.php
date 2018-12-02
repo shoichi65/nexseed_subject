@@ -104,6 +104,9 @@
 						</blockquote>
 					@endforeach
 				</div>
+
+				<!-- page control -->
+				{!! $comments->render() !!}
 			</div>
 
 		</div>
