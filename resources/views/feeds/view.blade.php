@@ -85,7 +85,7 @@
 			<div class="col-lg-4">
 				<div class="bs-component" id="comment_list">
 					@foreach($comments as $comment)
-						<blockquote id="comment-{{ $comment['id'] }}" class="delete-link">
+						<blockquote id="comment-{{ $comment['id'] }}">
 							{{-- <h2>Feeds List</h2> --}}
 							<p class="text-muted">
 								<td>{{ $comment['comment'] }}</td>
@@ -98,6 +98,7 @@
 								<a href="/comments/{{ $comment['id'] }}" 
 									data-feed_id="{{ $feed['id'] }}" 
 									data-comment_id="{{ $comment['id'] }}"
+									class="comment-delete"
 								>Delete</a>
 							@endauth
 						</blockquote>

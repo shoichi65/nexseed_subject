@@ -51,7 +51,7 @@ class CommentsController extends Controller
         // dd($comment);
 
         $result = '';
-        $result .= '<blockquote id="comment-'.$comment->id.'" class="delete-link">';
+        $result .= '<blockquote id="comment-'.$comment->id.'">';
         $result .= '<p class="text-muted">';
         $result .= '<td>'.$comment->comment.'</td>';
         $result .= '</p>';
@@ -59,7 +59,7 @@ class CommentsController extends Controller
         $result .= $comment->created_at;
         $result .= '<cite class="mt-5">'.$comment->user['name'].'</cite>';
         $result .= '</small>';
-        $result .= '<a href="/comments/'.$comment->id.'" data-feed_id="'.$comment->feed['id'].'" data-comment_id="'.$comment->id.'">Delete</a>';
+        $result .= '<a href="/comments/'.$comment->id.'" data-feed_id="'.$comment->feed['id'].'" data-comment_id="'.$comment->id.'" class="comment-delete">Delete</a>';
         $result .= '</blockquote>';
 
         return $result;

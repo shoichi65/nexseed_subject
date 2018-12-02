@@ -47,7 +47,7 @@ $(function(){
     });
 
     // コメント削除非同期処理
-    $('blockquote[id^="comment-"] a').on('click', "#comment_list", function(event) {
+    $('blockquote[id^="comment-"]').on('click', ".comment-delete", function(event) {
         // HTMLでの送信をキャンセル
         event.preventDefault();
         // 操作対象のフォーム要素を取得
@@ -71,37 +71,47 @@ $(function(){
             type: 'POST',
             data: data,
         })
-        .done((data) => {
-            console.log(data);
+        .done((result) => {
+            console.log(result);
             $(target_selector).remove();
         })
-        .fail((data) => {
-            console.log(data);
+        .fail((result) => {
+            console.log(result);
         });
-
-        
     });
     
     
-    // .submit(function(event){
-    //     // HTMLでの送信をキャンセル
-    //     event.preventDefault();
+    // admin feed有効/非同期処理
+    $('span[id^="feed-"]').on('click', ".feed-delete", function(event) {
+        // HTMLでの送信をキャンセル
+        event.preventDefault();
+        // 操作対象のフォーム要素を取得
+        var $a = $(this);
+        var data = $a.data();
+        var target_selector = "#feed-" + data['feed_id'];
 
-    //     // 操作対象のフォーム要素を取得
-    //     var $form = $(this);
+        // CSRF対策
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
 
-    //     // 送信
-    //     $.ajax({
-    //         url: $form.attr('action'),
-    //         type: $form.attr('method'),
-    //         data: $form.serialize(),
+        // methodを偽装
+        // data['_method'] = 'DELETE';
 
-    //         success: function(result, textStatus, xhr){
-    //             $('#comment_list').prepend(result);
-    //         },
-    //         error: function(xhr, textStatus, error){
-    //             // alert('NG...')
-    //         }
-    //     })
-    // });
+        $.ajax({
+            url: $a.attr('href'),
+            type: 'POST',
+            data: data,
+        })
+        .done((result) => {
+            console.log(result);
+            $(target_selector + ' .feed-delete').remove();
+            $(target_selector).append(result);
+        })
+        .fail((result) => {
+            console.log(result);
+        });
+    });
 });

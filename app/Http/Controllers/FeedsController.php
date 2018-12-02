@@ -13,7 +13,7 @@ class FeedsController extends Controller
     // ログインしていないときのリダイレクト
     public function __construct()
     {
-        $this->middleware('auth')->except(['index', 'view']);
+        $this->middleware('auth')->except(['index']);
     }
 
     // index
